@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="inc/header::header">
+<title>新增-商品管理</title>
+</head>
+<body>
+	<div id="goodsAddVue" class="container-fluid" v-cloak>
+		<table class="form" id="form">
+			<tr>
+	            <td class="formTitle">商品编号<font face="宋体">*</font></td>
+	            <td class="formValue">
+					<input type="text" class="form-control" v-model="goods.number" placeholder="商品编号" isvalid="yes" checkexpession="NotNull"/>
+				</td>
+        	</tr>
+        	<tr>
+	            <td class="formTitle">商品名称<font face="宋体">*</font></td>
+	            <td class="formValue">
+					<input type="text" class="form-control" v-model="goods.name" placeholder="商品名称" isvalid="yes" checkexpession="NotNull"/>
+				</td>
+        	</tr>
+        	<tr>
+        		<td class="formTitle">开启商品规格</td>
+        		<td class="formValue">
+        			<input type="checkbox" id="goodsSpec" class="form-control" v-model="goods.isSpecification" style="width:20px;float:left">
+        		</td>
+        	</tr>
+        	<tr style="display: none;" id="goodspecTr">
+        		<td class="formTitle">商品规格<br>
+					<a class="btn btn-info btn-xs" @click="selectSku">选取</a><br>
+					<button class="cloneSku btn btn-info btn-xs" onclick="addSku()">添加</button><br>
+					<button class="btn btn-info btn-xs" onclick="generateSku()">组合生成</button>
+				</td>
+        		<td class="formValue">
+					<table class="skuForm" id="skuForm">
+					</table>
+        		</td>
+        	</tr>
+			<tr id="goodStockShow" style="display: none">
+				<td class="formTitle">商品库存</td>
+				<td class="formValue generateTable">
+
+				</td>
+			</tr>
+        	<tr>
+	            <td class="formTitle">分享描述</td>
+	            <td class="formValue">
+					<input type="text" class="form-control" v-model="goods.shareDesc" placeholder="商品分享描述"/>
+				</td>
+        	</tr>
+			<tr>
+				<td class="formTitle">图片</td>
+			    <td class="formValue">
+					<div style="width: 100%;position: relative;">
+						<form id="upBox">
+						</form>
+						 <div id="inputBox"><input type="file" title="请选择图片" id="file" name="files" multiple accept="image/png,image/jpg,image/gif,image/JPEG" isvalid="yes" checkexpession="NotNull"/>点击选择图片</div>
+					     <div id="imgBox"></div>
+					     <a id="btn" style="display:none">上传</a>
+					     <div id="succes" style="display:none">上传成功</div>
+						 <input type="hidden" class="form-control">
+					</div>
+			    </td>
+			</tr>
+			
+        	<tr>
+	            <td class="formTitle">商品分类<font face="宋体">*</font></td>
+	            <td class="formValue">
+					<input type="text" class="form-control pointer" v-model="goods.classifyName" @click="goodsTree" readonly="readonly" placeholder="商品分类" isvalid="yes" checkexpession="NotNull"/>
+					<span class="input-button-icon" title="选取图标" @click="removeParent">
+						<i class="fa fa-remove"></i>
+					</span>
+				</td>
+        	</tr>
+        	<tr>
+	            <td class="formTitle">视频</td>
+	      		<td class="formValue">
+					<div class="upload_form_cont">
+		                <form id="upload_form" enctype="multipart/form-data" method="post">
+		                    <div>
+		                        <div><input type="file" name="video" id="videofile" onchange="fileSelected();" isvalid="yes"/></div>
+		                    </div>
+		                    <div>
+		                        <input type="button" id="uploadbtn" style="display:none" value="上传" onclick="startUploading()" />
+		                    </div>
+		                    <div id="fileinfo">
+		                        <div id="filename"></div>
+		                        <div id="filesize"></div>
+		                        <div id="filetype"></div>
+		                        <div id="filedim"></div>
+		                    </div>
+		                    <div id="error" style="color:red">您选择的不是一个mp4格式的视频文件</div>
+		                    <div id="error2">An error occurred while uploading the file</div>
+		                    <div id="abort">The upload has been canceled by the user or the browser dropped the connection</div>
+		                    <div id="warnsize" style="color:red">你的选择的文件大于20m,请重新选择</div>
+		
+		                    <div id="progress_info">
+		                        <div id="progress"></div>
+		                        <div id="progress_percent">&nbsp;</div>
+		                        <div class="clear_both"></div>
+		                        <div>
+		                            <div id="speed">&nbsp;</div>
+		                            <div id="remaining">&nbsp;</div>
+		                            <div id="b_transfered">&nbsp;</div>
+		                            <div class="clear_both"></div>
+		                        </div>
+		                        <div id="upload_response"></div>
+		                    </div>
+		                </form>
+		            </div>
+					 <input type="hidden" class="form-control" v-model="goods.video" id="video">
+				</td> 
+        	</tr>
+        	<tr id="picbfvd" style="display:none">
+				<td class="formTitle">视频前置图</td>
+				<td class="formValue">
+					<img id = "imageView" alt = " " src= "" style = "width:120px;height:120px;display:none">
+					<input id = "imageFile" type="file" name = "file" value="上传图片" onchange="uploadImage();">
+				</td>
+			</tr>
+        	<tr>
+        		<td class="formTitle">上架</td>
+        		<td class="formValue">
+        			<input type="checkbox" class="form-control" v-model="goods.status" style="width:20px;float:left">
+        		</td>
+        	</tr>
+        	<tr id="goods_price">
+	            <td class="formTitle">价格</td>
+	            <td class="formValue">
+					<input type="text" class="form-control" v-model="goods.price" placeholder="价格" isvalid="yes" checkexpession="Double"/>
+				</td>
+        	</tr>
+        	<tr id="goods_originalPrice">
+	            <td class="formTitle">原价</td>
+	            <td class="formValue">
+					<input type="text" class="form-control" v-model="goods.originalPrice" placeholder="原价" isvalid="yes" checkexpession="Double"/>
+				</td>
+        	</tr>
+        	<tr id="goods_stock">
+	            <td class="formTitle">库存</td>
+	            <td class="formValue">
+					<input type="text" class="form-control" v-model="goods.stock" placeholder="库存" isvalid="yes" checkexpession="Num"/>
+				</td>
+        	</tr>
+        	<tr>
+	            <td class="formTitle">销量</td>
+	            <td class="formValue">
+					<input type="text" class="form-control" v-model="goods.sales" placeholder="销量" isvalid="yes" checkexpession="Num"/>
+				</td>
+        	</tr>        	
+        	<tr>
+        		<td class="formTitle">图文详情</td>
+        		<td class="formValue">
+        			<textarea name="particulars" class="form-control" cols="100" rows="8" style="width:700px;height:200px;visibility:hidden;" v-model="goods.particulars"></textarea>
+        		</td>
+        	</tr>
+		</table>
+	</div>
+	<div th:include="inc/footer::footer"></div>
+	<link rel="stylesheet" th:href="@{/assets/css/upload/uploadImage.css}">
+	<link rel="stylesheet" th:href="@{/assets/css/upload/uploadVideo.css}">
+	<script th:src="@{/assets/js/bar/goods/add.js(${time})}"></script>
+    <script th:src="@{/assets/js/bar/goods/uploadImg.js(${time})}"></script>
+    <script th:src="@{/assets/js/bar/goods/uploadVideo.js(${time})}"></script>
+    <script th:src="@{/assets/plugins/kindeditor/kindeditor-all.js(${time})}"></script>
+	<script th:src="@{/assets/plugins/kindeditor/lang/zh-CN.js(${time})}"></script>
+	<script th:src="@{/assets/plugins/kindeditor/plugins/code/prettify.js(${time})}"></script>
+	<script th:src="@{/assets/plugins/upload/jquery.upload.js(${time})}"></script>
+    <script type="text/javascript">
+			imgUpload({
+				inputId:'file', //input框id
+				imgBox:'imgBox', //图片容器id
+				buttonId:'btn', //提交按钮id
+				upUrl: baseUrl + '/basic/upload/files?_' + $.now(),  //提交地址
+				data:'files', //参数名
+				num:"10"//上传个数
+			})
+			var editor1;			
+ 			KindEditor.ready(function(K) {
+				editor1 = K.create('textarea[name="particulars"]', {
+					uploadJson : baseUrl+'/goods/kindEdit/file?_' + $.now(),
+					filePostName: 'file',
+					items : [
+				        'source', '|', 'undo', 'redo', '|', 'preview', 'print', 'template', 'cut', 'copy', 'paste',
+				        'plainpaste', 'wordpaste', '|', 'justifyleft', 'justifycenter', 'justifyright',
+				        'justifyfull', 'insertorderedlist', 'insertunorderedlist', 'indent', 'outdent', 'subscript',
+				        'superscript', 'clearhtml', 'quickformat', 'selectall', '|', 'fullscreen', '/',
+				        'formatblock', 'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold',
+				        'italic', 'underline', 'strikethrough', 'lineheight', 'removeformat', '|', 'image', 'multiimage',
+				        'table', 'hr', 'emoticons', 'baidumap', 'pagebreak',
+				        'anchor', 'link', 'unlink', '|', 'about'
+					 	]
+				});
+			});
+		</script>
+</body>
+</html>

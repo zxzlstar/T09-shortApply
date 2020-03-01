@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="inc/header::header">
+<title>编辑-参数配置</title>
+</head>
+<style type="text/css">
+	.form .formTitle{
+		width:155px;
+	}
+</style>
+<body>
+
+	<div id="parametercfEditVue" class="container-fluid" v-cloak>
+	<div id="form">
+		<div class="panel-group" id="accordion">
+			<div class="panel panel-success">
+				<div class="panel-heading">
+					<h4 class="panel-title">
+						<a data-toggle="collapse" data-parent="#accordion"
+							href="#collapseOne" style="padding-right:100%;"> 收益分配配置 </a>
+					</h4>
+				</div>
+				<div id="collapseOne" class="panel-collapse collapse in">
+					<div class="panel-body">
+						<table class="form">
+							<tr>
+								<td class="formTitle">商家收入提成点数：</td>
+								<td class="formValue" colspan="2">
+									<div class="input-group">
+										<input type="text" class="form-inputcontrol"
+											id="PERCENTAGE_POINTS" placeholder="收入提成点数" isvalid="yes"
+											checkexpession="0To100" /> <span class="input-group-addon"
+											style="line-height: 0; position: relative;">%</span>
+										<!-- &nbsp;<span class="remark" ></span> -->
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td class="formTitle">店员打赏提成点数：</td>
+								<td class="formValue" colspan="2">
+									<div class="input-group">
+										<input type="text" class="form-inputcontrol"
+											id="REWARD_POINTS" placeholder="打赏提成点数" isvalid="yes"
+											checkexpession="0To100" /> <span class="input-group-addon"
+											style="line-height: 0; position: relative;">%</span>
+										<!-- &nbsp;<span class="remark" ></span> -->
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td class="formTitle" >会员佣金点数：</td>
+								<td class="formValue" colspan="2">
+									<div class="input-group">
+										<input type="text" class="form-inputcontrol"
+											id="COMMISSION_POINTS" placeholder="佣金点数" isvalid="yes"
+											checkexpession="0To100" /> <span class="input-group-addon"
+											style="line-height: 0;">%</span>
+										<!-- &nbsp;<span class="remark" ></span> -->
+									</div>
+								</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</div>
+
+			<div class="panel panel-info">
+				<div class="panel-heading">
+					<h4 class="panel-title">
+						<a data-toggle="collapse" data-parent="#accordion"
+							href="#collapseTwo" style="padding-right:100%;"> 微信相关配置 </a>
+					</h4>
+				</div>
+				<div id="collapseTwo" class="panel-collapse collapse">
+					<div class="panel-body">
+						<table class="form" >
+							<tr>
+								<td class="formTitle">微信APPID：</td>
+								<td class="formValue"><input type="text"
+									style="width: 300px;" class="form-inputcontrol" id="WX_APPID"
+									placeholder="微信APPID" isvalid="yes" /> &nbsp;<span
+									class="remark" style="width: 300px;"></span></td>
+							</tr>
+							<tr>
+								<td class="formTitle" >微信SECRET：</td>
+								<td class="formValue"><input type="text"
+									style="width: 300px;" class="form-inputcontrol" id="WX_SECRET"
+									placeholder="微信SECRET" isvalid="yes" /> &nbsp;<span
+									class="remark"></span></td>
+							</tr>
+							<tr>
+								<td class="formTitle" >微信支付APPID：</td>
+								<td class="formValue"><input type="text"
+									style="width: 300px;" class="form-inputcontrol"
+									id="WXPAY__APPID" placeholder="微信支付APPID" isvalid="yes" />
+									&nbsp;<span class="remark"></span></td>
+							</tr>
+							<tr>
+								<td class="formTitle" >微信支付商户号：</td>
+								<td class="formValue"><input type="text"
+									style="width: 300px;" class="form-inputcontrol"
+									id="WXPAY__MCHID" placeholder="微信支付商户号" isvalid="yes" />
+									&nbsp;<span class="remark"></span></td>
+							</tr>
+							<tr>
+								<td class="formTitle">微信支付SECRET：</td>
+								<td class="formValue"><input type="text"
+									style="width: 300px;" class="form-inputcontrol"
+									id="WXPAT_SECRET" placeholder="微信支付SECRET" isvalid="yes" />
+									&nbsp;<span class="remark"></span></td>
+							</tr>
+							<tr>
+								<td class="formTitle">微信支付证书：</td>
+								<td class="formValue" colspan="2">
+									<form id="upload_form" enctype="multipart/form-data"
+										method="post">
+										<input id="wxfile" type="text" class="remark"
+											style="display: inline; float: left;" isvalid="yes" /> <input
+											id="WXPAY_CERT" class="form-inputcontrol" type="hidden"
+											style="display: inline; float: left;" /> <input type="file"
+											id="testFile" name="file" onchange="selectFile();"
+											isvalid="yes">
+									</form>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div id="error"
+										style="color: red; display: none; width: 300px; padding-left: 125px;">请选择一个.p12格式的文件</div>
+								</td>
+								<td style="padding-left: 5px;"><input type="button"
+									class="btn btn-primary btn-sm" id="uploadbtn"
+									onclick="uploadFile()" style="display: none" value="上传" /></td>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</div>
+			<div class="panel panel-warning">
+				<div class="panel-heading">
+					<h4 class="panel-title">
+						<a data-toggle="collapse" data-parent="#accordion"
+							href="#collapseThree" style="padding-right:100%;"> 自动审核配置 </a>
+					</h4>
+				</div>
+				<div id="collapseThree" class="panel-collapse collapse">
+					<div class="panel-body">
+						<table class="form">
+							<tr>
+								<td class="formTitle">商家商品自动审核：</td>
+								<td id="formValue" style="height: 35px;"><lable
+										class="radio-inline"> &nbsp;&nbsp;&nbsp;&nbsp; <input
+										type="radio" name="MERCH_GOODS_AUTO_CHECK" value="1"
+										isvalid="yes" v-model="MERCH_GOODS_AUTO_CHECK" />是
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input
+										type="radio" name="MERCH_GOODS_AUTO_CHECK" value="0"
+										isvalid="yes" v-model="MERCH_GOODS_AUTO_CHECK" />否 </lable></td>
+							</tr>
+							<tr>
+								<td class="formTitle">会员提现自动审核：</td>
+								<td id="formValue" style="height: 35px;"><lable
+										class="radio-inline"> &nbsp;&nbsp;&nbsp;&nbsp; <input
+										type="radio" name="MEMBER_WITHDRAW_AUTO_CHECK" value="1"
+										isvalid="yes" v-model="MEMBER_WITHDRAW_AUTO_CHECK" />是
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input
+										type="radio" name="MEMBER_WITHDRAW_AUTO_CHECK" value="0"
+										isvalid="yes" v-model="MEMBER_WITHDRAW_AUTO_CHECK" />否 </lable></td>
+							</tr>
+							<tr>
+								<td class="formTitle">商家提现自动审核：</td>
+								<td id="formValue" style="height: 35px;"><lable
+										class="radio-inline"> &nbsp;&nbsp;&nbsp;&nbsp; <input
+										type="radio" name="MERCH_WITHDRAW_AUTO_CHECK" value="1"
+										isvalid="yes" v-model="MERCH_WITHDRAW_AUTO_CHECK" />是
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input
+										type="radio" name="MERCH_WITHDRAW_AUTO_CHECK" value="0"
+										isvalid="yes" v-model="MERCH_WITHDRAW_AUTO_CHECK" />否 </lable></td>
+							</tr>
+							<tr>
+								<td class="formTitle">店员提现自动审核：</td>
+								<td id="formValue" style="height: 35px;"><lable
+										class="radio-inline"> &nbsp;&nbsp;&nbsp;&nbsp; <input
+										type="radio" name="CLERK_WITHDRAW_AUTO_CHECK" value="1"
+										isvalid="yes" v-model="CLERK_WITHDRAW_AUTO_CHECK" />是
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input
+										type="radio" name="CLERK_WITHDRAW_AUTO_CHECK" value="0"
+										isvalid="yes" v-model="CLERK_WITHDRAW_AUTO_CHECK" />否 </lable></td>
+							</tr>
+							<tr>
+								<td class="formTitle">招聘职位自动审核：</td>
+								<td id="formValue" style="height: 35px;"><lable
+										class="radio-inline"> &nbsp;&nbsp;&nbsp;&nbsp; <input
+										type="radio" name="POSITION_AUTO_CHECK" value="1"
+										isvalid="yes" v-model="POSITION_AUTO_CHECK" />是
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input
+										type="radio" name="POSITION_AUTO_CHECK" value="0"
+										isvalid="yes" v-model="POSITION_AUTO_CHECK" />否 </lable></td>
+							</tr>
+							<tr>
+								<td class="formTitle">社区主题自动审核：</td>
+								<td id="formValue" style="height: 35px;"><lable
+										class="radio-inline"> &nbsp;&nbsp;&nbsp;&nbsp; <input
+										type="radio" name="SUBJECT_AUTO_CHECK" value="1"
+										isvalid="yes" v-model="SUBJECT_AUTO_CHECK" />是
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input
+										type="radio" name="SUBJECT_AUTO_CHECK" value="0"
+										isvalid="yes" v-model="SUBJECT_AUTO_CHECK" />否 </lable></td>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</div>
+			<div class="panel panel-success">
+				<div class="panel-heading">
+					<h4 class="panel-title">
+						<a data-toggle="collapse" data-parent="#accordion"
+							href="#collapseFour" style="padding-right:100%;"> 定时任务配置 </a>
+					</h4>
+				</div>
+				<div id="collapseFour" class="panel-collapse collapse">
+					<div class="panel-body">
+						<table class="form">
+							<tr>
+								<td class="formTitle">竞猜兑换码过期时间：</td>
+								<td class="formValue" colspan="2">
+									<div class="input-group">
+										<input type="text" class="form-inputcontrol"
+											id="GUESS_GOODS_OVERDUE" placeholder="0为不限时间" isvalid="yes"
+											checkexpession="Num" /> <span class="input-group-addon"
+											style="line-height: 0; position: relative;">天</span>
+										<!-- &nbsp;<span class="remark" ></span> -->
+									</div>
+								</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		</div>
+
+	<a class="btn btn-primary" onclick="vm.acceptClick()"><i class="fa fa-save"></i>&nbsp;保存</a>
+	</div>
+
+
+	<div th:include="inc/footer::footer"></div>
+	<script th:src="@{/assets/plugins/upload/jquery.upload.js(${time})}"></script>
+	<script
+		th:src="@{/assets/plugins/jQueryDistpicker/js/distpicker.data.js(${time})}"></script>
+	<script
+		th:src="@{/assets/plugins/jQueryDistpicker/js/distpicker.js(${time})}"></script>
+	<script th:src="@{/assets/js/bar/parametercf/edit.js(${time})}"></script>
+
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="inc/header::header">
+<title>幻灯片管理</title>
+</head>
+<body>
+<div id="bannerListVue" class="container-fluid" v-cloak>
+	<div class="row">
+		<div class="col-md-7 form-inline pull-left">
+			<div class="form-group">
+		    	&nbsp;&nbsp;名称：<input v-model="keyword" @keyup.enter="load" class="form-control" placeholder="请输入查询关键字" style="width: 220px;" />
+		    	&nbsp;&nbsp;位置：	
+					<select v-model="position" class="form-control" @keyup.enter="load" placeholder="位置" style="width: 80px">
+						<option value="">全部</option>
+						<option value="1">首页</option>
+						<option value="2">竞猜页</option>
+					</select>
+			</div>
+			<div class="form-group">
+			    <a class="btn btn-primary" @click="load"><i class="fa fa-search"></i>&nbsp;查询</a>
+			</div>
+		</div>
+		<div class="col-md-5">
+			<div class="btn-toolbar pull-right">
+				<div class="btn-group">
+		            <a v-if="hasPermission('bar:banner:list')" class="btn btn-default" onclick="reload();"><i class="fa fa-refresh"></i>&nbsp;刷新</a>
+		            <a v-if="hasPermission('bar:banner:add')" class="btn btn-default" @click="add"><i class="fa fa-plus"></i>&nbsp;新增</a>
+		            <a v-if="hasPermission('bar:banner:edit')" class="btn btn-default" @click="edit"><i class="fa fa-pencil-square-o"></i>&nbsp;编辑</a>
+		            <a v-if="hasPermission('bar:banner:remove')" class="btn btn-default" @click="remove"><i class="fa fa-trash-o"></i>&nbsp;删除</a>
+		        </div>
+	        </div>
+		</div>
+	</div>
+	<div class="row">
+		<table id="dataGrid"></table>
+	</div>
+</div>
+<div th:include="inc/footer::footer"></div>
+<script th:src="@{/assets/js/bar/banner/list.js(${time})}"></script>
+</body>
+</html>

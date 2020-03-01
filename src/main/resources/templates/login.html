@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta content="${_csrf_token}" name="csrf_token"/>
+  <title>VR展示--登录</title>
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <link href="assets/plugins/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/css/font-awesome.min.css">
+  <link href="assets/plugins/vue-loading/vue-loading.min.css" rel="stylesheet" >
+  <link rel="stylesheet" href="assets/css/new/style.min.css">
+  <link rel="stylesheet" href="assets/css/common.min.css">
+  <link href="assets/plugins/limonte-sweetalert2/6.4.1/sweetalert2.min.css" rel="stylesheet">
+<style >
+    body,html {
+        background: url("assets/img/bg/5.png") no-repeat;
+        background-size: cover;
+    }
+    .panel-shadow {
+        -moz-box-shadow: 0px 0px 10px 0px rgba(39, 49, 65, 0.1);
+        -webkit-box-shadow: 0px 0px 10px 0px rgba(39, 49, 65, 0.1);
+        box-shadow: 0px 0px 10px 0px rgba(39, 49, 65, 0.1);
+    }
+    .bg-overlay {
+        -moz-border-radius: 6px 6px 0 0;
+        -webkit-border-radius: 6px 6px 0 0;
+        background-color: rgba(47, 51, 62, 0.3);
+        border-radius: 6px 6px 0 0;
+        height: 100%;
+        left: 0;
+        position: absolute;
+        top: 0;
+        width: 100%;
+    }
+    .input-border {
+        font-size: 14px;
+        width: 100%;
+        height: 40px;
+        border-radius: 0;
+        border: none;
+        border-bottom: 1px solid #dadada;
+    }
+
+    .bg-img > h3 {
+        text-shadow: 0px 2px 3px #555;
+        color: #cac9c8;
+    }
+</style>
+
+    <script src="assets/plugins/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="assets/plugins/respond.js/1.3.0/respond.min.js"></script>
+</head>
+<body class="hold-transition login-page">
+<!--<div class="login-box" id="loginVue" v-cloak>
+  <div class="login-logo">
+    <b>VR展示后台登录</b>
+  </div>
+  <div class="login-box-body">
+      &lt;!&ndash; <p class="login-box-msg">管理员登录</p> &ndash;&gt;
+      <div v-if="error" class="alert alert-danger alert-dismissible">
+        <i class="fa fa-exclamation-triangle"></i> {{errorMsg}}
+      </div>
+      <div class="form-group has-feedback">
+        <input type="text" class="form-control" v-model="username" placeholder="账号">
+        <span class="glyphicon glyphicon-user form-control-feedback"></span>
+      </div>
+      <div class="form-group has-feedback">
+        <input type="password" class="form-control" v-model="password" placeholder="密码">
+        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+      </div>
+      &lt;!&ndash;
+      <div class="form-group has-feedback">
+        <input type="text" class="form-control" v-model="captcha" @keyup.enter="login" placeholder="验证码">
+        <span class="glyphicon glyphicon-warning-sign form-control-feedback"></span>
+      </div>
+      <div class="form-group has-feedback">
+        <img alt="如果看不清楚，请单击图片刷新！" class="pointer" :src="src" @click="refreshCode">
+        &nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:;" @click="refreshCode">点击刷新</a>
+      </div>
+       &ndash;&gt;
+      
+      <div class="row">
+        <div class="col-xs-8">
+          <div class="checkbox icheck">
+          </div>
+        </div>
+        <div class="col-xs-4">
+          <button type="button" class="btn btn-primary btn-block btn-flat" @click="login">登录</button>
+        </div>
+      </div>
+  </div>
+</div>-->
+
+<div style="margin: 0 auto; padding-bottom: 0%; padding-top: 7.5%; width: 380px;">
+    <div class="panel panel-color panel-danger panel-pages panel-shadow">
+        <div class="panel-heading bg-img">
+            <div class="bg-overlay"></div>
+            <h3 class="text-center m-t-10">商城管理端</h3>
+        </div>
+
+        <div class="panel-body">
+            <form class="form-horizontal m-t-20" method="post" id="loginForm" onsubmit="return checkForm()">
+
+                <div class="form-group">
+                    <div class="col-xs-12">
+                        <input class=" input-lg input-border" name="username" type="text" required=""
+                               placeholder="请输入账号 :)">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-xs-12">
+                        <input class=" input-lg input-border" name="password" type="password" required=""
+                               placeholder="请输入密码">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-xs-12">
+                        <div class="checkbox checkbox-danger">
+                            <input id="checkbox-signup" name="rememberMe" type="checkbox">
+                            <label for="checkbox-signup">记住我</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group text-center m-t-40">
+                    <div class="col-xs-12">
+                        <button class="btn btn-danger btn-lg btn-rounded btn-block w-lg waves-effect waves-light" style="box-shadow: 0px 0px 4px #868282;" type="submit">登&nbsp;录
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+<script src="assets/libs/jquery.min.js"></script>
+<script src="assets/libs/vue.min.js"></script>
+<script src="assets/plugins/vue-loading/vue-loading.min.js"></script>
+<script src="assets/plugins/limonte-sweetalert2/6.4.1/sweetalert2.min.js"></script>
+<script src="assets/plugins/axios/axios.min.js"></script>
+<script src="assets/js/base.js"></script>
+<script type="text/javascript">
+/*var vm = new Vue({
+	el:'#loginVue',
+	data:{
+		username: 'admin',
+		password: '',
+		captcha: '',
+		error: false,
+		errorMsg: '',
+		src: 'sys/captcha.jpg'
+	},
+	beforeCreate: function(){
+		if(self != top){
+			top.location.href = self.location.href;
+		}
+	},
+	methods: {
+		refreshCode: function(){
+			//this.src = "sys/captcha.jpg?t=" + $.now();
+		},
+		login: function (event) {
+			if(vm.username == '') {
+				vm.error = true;
+				vm.errorMsg = '用户名为空';
+				return false;
+			}
+			if(vm.password == '') {
+				vm.error = true;
+				vm.errorMsg = '密码为空';
+				return false;
+			}
+			/!*
+			if(vm.captcha == '') {
+				vm.error = true;
+				vm.errorMsg = '验证码为空';
+				return false;
+			}
+			*!/
+			var data = "username="+vm.username+"&password="+vm.password ; //+"&captcha="+vm.captcha;
+			$.ajax({
+				type: "POST",
+			    url: "login",
+			    data: data,
+			    dataType: "json",
+			    success: function(result){
+					if(result.code == 200){//登录成功
+						parent.location.href ='index';
+					}else{
+						vm.error = true;
+						vm.errorMsg = result.message;
+						
+						vm.refreshCode();
+					}
+				}
+			});
+		}
+	}
+});*/
+
+var tale = new $.tale();
+function checkForm() {
+    tale.post({
+        url: 'login',
+        data: $("#loginForm").serialize(),
+        success: function (result) {
+            if (result && result.code == 200) {
+                window.location.href = 'index';
+            } else {
+                tale.alertError(result.msg || '登录失败');
+            }
+        }
+    });
+    return false;
+}
+</script>
+</body>
+</html>

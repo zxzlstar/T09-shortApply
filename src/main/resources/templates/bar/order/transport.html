@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="inc/header::header">
+<title>配送信息-订单管理</title>
+</head>
+<body>
+	<div id="orderAddVue" class="container-fluid" v-cloak>
+		<table class="form" id="form">
+			<tr>
+	            <td class="formTitle">货运单号<font face="宋体">*</font></td>
+	            <td class="formValue">
+					<input type="text" class="form-control" placeholder="货运单号" v-model="order.transportNo" isvalid="yes" checkexpession="NotNull">
+	            </td>
+        	</tr>
+		</table>
+	</div>
+	<div th:include="inc/footer::footer"></div>
+	<script
+		th:src="@{/assets/js/bar/order/transport.js(${time})}"></script>
+</body>
+</html>

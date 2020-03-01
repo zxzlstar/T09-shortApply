@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="inc/header::header">
+<title>编辑-商品类别</title>
+</head>
+<body>
+	<div id="goodscfEditVue" class="container-fluid" v-cloak>
+		<table class="form" id="form">
+        	<tr>
+	            <td class="formTitle">名称<font face="宋体">*</font></td>
+	            <td class="formValue">
+					<input type="text" class="form-control" v-model="goodscf.name" placeholder="商品类别名称" isvalid="yes" checkexpession="NotNull"/>
+				</td>
+        	</tr>
+        	<tr>
+	            <td class="formTitle">上级商品类别</td>
+	            <td class="formValue">
+					<input type="text" class="form-control pointer" v-model="goodscf.pname" @click="goodscfTree" readonly="readonly" />
+					<span class="input-button-icon" title="选取图标" @click="removeParent">
+						<i class="fa fa-remove"></i>
+					</span>
+					<input type="hidden" id="goodscfTree">
+				</td>
+        	</tr>
+			<tr>
+				<td class="formTitle">图片</td>
+				<td class="formValue">
+					<img id = "imageView" alt = " " src= "" style = "float:left;width:120px;height:120px">
+					<input id = "imageFile" type="file" name = "file" value="上传图片" onchange="uploadImage();">
+					<input id = "image" class="form-control" type = "hidden" v-model="goodscf.image" >
+				</td>
+			</tr>
+        	<tr>
+        		<td class="formTitle">排序</td>
+	            <td class="formValue">
+					<input type="text" class="form-control" placeholder="默认是0，数字越大，商品类别排的位置越前" v-model="goodscf.rank" isvalid="yes" checkexpession="Num">
+	            </td>
+        	</tr>
+        	<tr>
+	            <td class="formTitle">备注</td>
+	            <td class="formValue">
+					<textarea class="form-control" rows="4" placeholder="备注" v-model="goodscf.remark"></textarea>
+				</td>
+        	</tr>
+		</table>
+	</div>
+	<!-- 选择商品类别 -->
+	<div id="goodscfLayer" style="display: none;padding:10px;">
+		<ul id="goodscfTree" class="ztree"></ul>
+	</div>
+	<div th:include="inc/footer::footer"></div>
+	<script
+		th:src="@{/assets/js/bar/goodscf/edit.js(${time})}"></script>
+	<script th:src="@{/assets/plugins/upload/jquery.upload.js(${time})}"></script>
+</body>
+</html>

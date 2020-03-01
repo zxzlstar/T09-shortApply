@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="inc/header::header">
+<title>审核商品-商品管理</title>
+</head>
+<body>
+	<div id="goodsCheckVue" class="container-fluid" v-cloak>
+		<table class="form" id="form">
+			<tr>
+				<td class="formTitle">审核：<font face="宋体">*</font></td>
+				<td class="formValue">
+					<label class="radio-inline">
+						<input type="radio" value="2" v-model="goods.checkStatus" id="merchtype1"/> <label for="merchtype1">通过</label>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<input type="radio" value="3" v-model="goods.checkStatus" id="merchtype2"/> <label for="merchtype2">不通过</label>
+					</label>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div th:include="inc/footer::footer"></div>
+	<script
+		th:src="@{/assets/js/bar/goods/check.js(${time})}"></script>
+</body>
+</html>

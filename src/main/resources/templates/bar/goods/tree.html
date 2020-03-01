@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="inc/header::header">
+<title>新增-商品类型</title>
+</head>
+<body>
+	<div id="goodscfTreeVue" class="container-fluid" v-cloak>
+		<ul id="goodscfTree" class="ztree"></ul>
+	</div>
+	<div th:include="inc/footer::footer"></div>
+	<script type="text/javascript">
+	var setting = {
+		data : {
+			simpleData : {
+				enable : true,
+				idKey : "id",
+				pIdKey : "pid",
+				rootPId : -1
+			},
+			key : {
+				url : "nourl"
+			}
+		}
+	};
+	var ztree;
+
+	var vm = new Vue({
+		el : '#goodscfTreeVue',
+		methods : {
+			getGoodscf : function(id) {
+				$.get(baseUrl + '/shop/goodscf/list', function(r) {
+					ztree = $.fn.zTree
+							.init($("#goodscfTree"), setting, r.data);
+					if(top.layerForm.vm.goodscf.pid != ''){
+						var node = ztree.getNodeByParam("id", top.layerForm.vm.goodscf.pid);
+						ztree.selectNode(node);
+						top.layerForm.vm.goodscf.pname = node.name;
+					}
+					var treeObj = $.fn.zTree.getZTreeObj("goodscfTree");
+					treeObj.expandAll(true);
+					var node = ztree.getNodeByParam("id", top.layerForm.vm.goods.classifyId);
+					ztree.selectNode(node);
+				})
+			},
+			acceptClick: function() {
+				var node = ztree.getSelectedNodes();
+				var parent = node[0].getParentNode();
+				top.layerForm.vm.goods.classifyId = node[0].id;
+				top.layerForm.vm.goods.classifyName = node[0].name;//设置
+				dialogClose();
+			}
+		},
+		created : function() {
+			this.getGoodscf();
+		}
+	})
+	</script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="inc/header::header">
+<title>优先推荐设置-招聘管理</title>
+</head>
+<body>
+	<div id="topicRecommendVue" class="container-fluid" v-cloak>
+		<table class="form" id="form">
+			<tr>
+				<td class="formTitle">是否优先推荐：<font face="宋体">*</font></td>
+				<td class="formValue">
+					<label class="radio-inline">
+						<input type="radio" value="1" v-model="topic.recommend" id="topicpop1"/> <label for="topicpop1">是</label>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<input type="radio" value="0" v-model="topic.recommend" id="topicpop2" checked/> <label for="topicpop2">否</label>
+					</label>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div th:include="inc/footer::footer"></div>
+	<script
+		th:src="@{/assets/js/bar/topic/recommend.js(${time})}"></script>
+</body>
+</html>

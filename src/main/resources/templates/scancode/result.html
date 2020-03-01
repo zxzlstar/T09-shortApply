@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>精选酒吧平台</title>
+<meta name="viewport"
+	content="width=device-width,initial-scale=1,user-scalable=0,user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}" media="all">
+<style type="text/css">
+body {
+	background-color: #FFFFFF;
+}
+.content {
+	width: 100%;
+	height: 100%;
+	margin-top: 100px;
+}
+.imageIcon {
+	width: 100px;
+	height: 100px;
+	border: 1px solid #FFF;
+	border-radius: 50px;
+	margin:0 auto;
+}
+.imageUrl {
+	width: 100%;
+	height: 100%;
+	border: 1px solid #FFF;
+	border-radius: 50px;
+}
+.nickName {
+	padding: 20px 0px;
+}
+.nickNameValue {
+	font-size: 18px;
+	text-align: center;
+}
+.nickTips {
+	text-align: center;
+	color: #777777;
+	font-size: 15px;
+	margin-top: 10px;
+}
+footer{
+	margin-top: 20px;
+	text-align: center;
+}
+.btnYes {
+	width: 95%;
+	background-color: #02BF01;
+}
+.btnNo {
+	width: 95%;
+	margin-top: 20px;
+	margin-left:0px!important;
+}
+</style>
+</head>
+<body>
+	<div class="content">
+		<div class="imageIcon">
+			<img class="imageUrl" th:src="@{${result} == 0 ? '/assets/img/success.jpg':'/assets/img/error.jpg'}" alt="" />
+		</div>
+		<div class="nickName">
+			<p class="nickTips" th:if="${result=='0'}">操作成功</p>
+			<p class="nickTips" th:if="${result=='-1'}">操作失败</p>
+			<p class="nickTips" th:if="${result=='-2'}">二维码已经过期</p>
+			<p class="nickTips" th:if="${result=='-3'}">数据找不到</p>
+			<p class="nickTips" th:if="${result=='-4'}">二维码已经被其它人扫了</p>
+			<p class="nickTips" th:if="${result=='-5'}">你的微信已经绑定商户平台了，不能重复绑定</p>
+			<p class="nickTips" th:if="${result=='-6'}">你的微信还没有绑定商户平台</p>
+		</div>
+	</div>
+	<footer>
+		<button id = "close" type="button" class="btn btn-default btnNo">关闭</button>
+	</footer>
+</body>
+<script type="text/javascript" th:src="@{/assets/libs/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/assets/libs/bootstrap.min.js}"></script>
+<script type="text/javascript" th:src="@{/assets/libs/jweixin-1.2.0.js}"></script>
+<script>
+$(function(){
+	$("#close").click(function(){
+		wx.closeWindow();
+	});
+}) ;
+</script>
+</html>

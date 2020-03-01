@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="inc/header::header">
+<title>物流信息-订单管理</title>
+</head>
+<body>
+	<div id="transportVue" class="container-fluid" v-cloak>
+
+	</div>
+	<div th:include="inc/footer::footer"></div>
+	<script
+		th:src="@{/assets/js/bar/order/transporting.js(${time})}"></script>
+</body>
+</html>

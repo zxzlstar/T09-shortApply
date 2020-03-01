@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="inc/header::header">
+<title>订单详情-订单管理</title>
+</head>
+<body>
+	<div id="orderDetailVue">
+		<table class="form" id="form">
+        	<tr>
+	            <td class="formTitle">订单号 :</td>
+	            <td class="formValue">
+					<span th:text="${order.oid}"></span>
+	            </td>
+	            <td class="formTitle">下单日期 :</td>
+	            <td class="formValue">
+	            	<span th:text="${order.date +' ' + order.time}"></span>
+	            </td>
+        	</tr>
+ 
+        	<tr>
+        	 	<td class="formTitle">支付号 :</td>
+	            <td class="formValue">
+	            	<span th:text="${order.payNo}"></span>
+	            </td>
+	            <td class="formTitle">支付时间 :</td>
+	            <td class="formValue">
+	            	<span th:text="${order.payTime}"></span>
+	            </td>
+       
+        	</tr>
+        	<tr>
+        		<td class="formTitle">数量 :</td>
+	            <td class="formValue">
+	            	<span th:text="${order.quantity}"></span>
+	            </td>	
+	            <td class="formTitle">单价 :</td>
+	            <td class="formValue">
+	            	<span th:text="${order.price}"></span>
+	            </td>
+	            
+        	</tr>
+        	<tr>
+        		<td class="formTitle">订单金额 :</td>
+	            <td class="formValue">
+	           		<span th:text="${order.amount}"></span>
+	            </td>
+	            <td class="formTitle">所属商户:</td>
+	            <td class="formValue">
+	            	<span class="status" th:if="${order.merchName != ''}">
+	           			<span th:text="${order.merchName}" style="color:green;"></span>
+	           		</span>
+	           		<span class="status" th:if="${order.merchName == null || order.merchName == ''}">
+	           			<span style="color:red;">平台</span>
+	           		</span>
+	            </td>
+        	</tr>
+			<tr>
+	            <td class="formTitle">推荐人  :</td>
+	            <td class="formValue" colspan="3">
+	            	<span th:text="${order.referrer}"></span>
+	            </td>
+        	</tr> 
+        	<tr>
+        		<td class="formTitle">卖家留言 :</td>
+	            <td class="formValue"  colspan="3">
+	            	<span th:text="${order.message}"></span>
+	            </td>
+        	</tr>         	
+			<tr>
+	            <td class="formTitle">订单状态  :</td>
+	            <td class="formValue">
+	            	<span class="status" th:if="${order.status==1}">待付款</span>
+					<span class="status" th:if="${order.status==2}">已付款,待兑换</span>
+					<span class="status" th:if="${order.status==3}">已兑换</span>
+					<span class="status" th:if="${order.status==4}">未中奖</span>
+					<span class="status" th:if="${order.status==5}">中奖,待兑换</span>
+					<span class="status" th:if="${order.status==6}">兑换码已过期</span>
+					<span class="status" th:if="${order.status==7}">部分兑换</span>
+	            </td>
+	            <td class="formTitle">订单类型  :</td>
+	            <td class="formValue">
+	            	<span class="orderType" th:if="${order.orderType==1}" style="color:red;">普通订单</span>
+	            	<span class="orderType" th:if="${order.orderType==2}" style="color:green;">竞猜订单</span>
+	            </td>
+        	</tr>     	  	  	
+		</table>
+		<table class="table table-striped">
+		  <tr>
+		  	<td>商品图片</td>
+		    <td>商品名称</td>
+		  	<td>商品类别</td>
+		  	<td>商品规格参数</td>
+		  	<td>数量</td>
+		  	<td>单价</td>
+		  	<td>合计</td>
+		  </tr>
+		  
+		  <tr th:if="${order.specificationId == null || order.specificationId == ''}">
+		    <td><img th:src="${order.goodsVo.picture}" style="width:100px;height:100px"/></td>
+		  	<td><span th:text="${order.goodsVo.name}"></span></td>
+		    <td><span th:text="${order.goodsVo.classify.name}"></span></td>
+		    <td>无 </td>
+		    <td><span th:text="${order.quantity}"></span></td>
+		    <td><span th:text="${order.price}"></span></td>
+		    <td><span th:text="${order.amount}"></span></td>
+		  </tr>
+		  <tr th:if="${order.specificationId != null && order.specificationId != ''}">
+		    <td><img th:src="${order.goodsVo.picture}" style="width:100px;height:100px"/></td>
+		  	<td><span th:text="${order.goodsVo.name}"></span></td>
+		    <td><span th:text="${order.goodsVo.classify.name}"></span></td>
+		    <td><span th:text="${order.goodsVo.goodsSpecification.paramsValue}"></span></td>
+		    <td><span th:text="${order.quantity}"></span></td>
+		    <td><span th:text="${order.price}"></span></td>
+		    <td><span th:text="${order.amount}"></span></td>
+		  </tr>
+		</table> 
+	</div>
+<!-- 	<script
+		th:src="@{/assets/js/bar/order/orderDetail.js(${time})}"></script> -->
+</body>
+</html>

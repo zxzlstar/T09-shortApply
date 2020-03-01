@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="inc/header::header">
+<title>置顶设置-主题管理</title>
+</head>
+<body>
+	<div id="subjectStickVue" class="container-fluid" v-cloak>
+		<table class="form" id="form">
+			<tr>
+				<td class="formTitle">是否置顶：<font face="宋体">*</font></td>
+				<td class="formValue">
+					<label class="radio-inline">
+						<input type="radio" value="1" v-model="subject.stick" id="subjectpop1"/> <label for="subjectpop1">是</label>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<input type="radio" value="0" v-model="subject.stick" id="subjectpop2" checked/> <label for="subjectpop2">否</label>
+					</label>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div th:include="inc/footer::footer"></div>
+	<script
+		th:src="@{/assets/js/bar/subject/stick.js(${time})}"></script>
+</body>
+</html>

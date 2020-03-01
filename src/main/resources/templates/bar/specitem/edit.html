@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="inc/header::header">
+<title>编辑-规格项管理</title>
+</head>
+<body>
+	<div id="specitemEditVue" class="container-fluid" v-cloak>
+		<table class="form" id="form">
+			<tr>
+	            <td class="formTitle">规格项名称<font face="宋体">*</font></td>
+	            <td class="formValue">
+					<input type="text" class="form-control" placeholder="名称" v-model="specItem.paramsName" isvalid="yes" checkexpession="NotNull">
+	            </td>
+        	</tr>
+			<tr>
+				<td class="formTitle">规格值<font face="宋体">*</font></td>
+				<td class="formValue">
+					<input type="text" class="form-control paramsValue" style="width: 70%;display: inline-block" placeholder="值" isvalid="yes" checkexpession="NotNull">
+					<button type="button" class="btn btn-default btn-sm" onclick="valPlus(this)">
+						<span class="glyphicon glyphicon-plus"></span>
+					</button>
+					<button type="button" class="btn btn-default btn-sm" onclick="valRemove(this)">
+						<span class="glyphicon glyphicon-remove"></span>
+					</button>
+				</td>
+			</tr>
+        	<tr id="signTop">
+	            <td class="formTitle formTitle-top">备注</td>
+	            <td class="formValue">
+					<textarea class="form-control" rows="4" placeholder="备注" v-model="specItem.remark"></textarea>
+	            </td>
+        	</tr>
+		</table>
+	</div>
+	<div th:include="inc/footer::footer"></div>
+	<script
+		th:src="@{/assets/js/bar/specitem/edit.js(${time})}"></script>
+</body>
+</html>

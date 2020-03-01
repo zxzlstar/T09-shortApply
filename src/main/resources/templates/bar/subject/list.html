@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="inc/header::header">
+<title>主题管理</title>
+</head>
+<body>
+<div id="subjectListVue" class="container-fluid" v-cloak>
+	<div class="row">
+		<div class="col-md-9 form-inline pull-left">
+			<div class="form-group">
+		    	&nbsp;&nbsp;状态：	
+					<select v-model="searchStatus" class="form-control" @keyup.enter="load" placeholder="" style="width: 80px">
+						<option value="">全部</option>
+						<option value="1">已发布，待审核</option>
+						<option value="2">展示中</option>
+						<option value="3">审核不通过</option>
+						<option value="4">已下架</option>
+					</select>
+				&nbsp;&nbsp;置顶：
+					<select v-model="stick" class="form-control" @keyup.enter="load" placeholder="" style="width: 120px">
+						<option value="">全部</option>
+						<option value="1">是</option>
+						<option value="0">否</option>
+					</select>
+				&nbsp;&nbsp;优先推荐：
+					<select v-model="recommend" class="form-control" @keyup.enter="load" placeholder="" style="width: 120px">
+						<option value="">全部</option>
+						<option value="1">是</option>
+						<option value="0">否</option>
+					</select>	
+			</div>
+			<div class="form-group">
+			    <a class="btn btn-primary" @click="load"><i class="fa fa-search"></i>&nbsp;查询</a>
+			</div>
+		</div>
+		<div class="col-md-3">
+			<div class="btn-toolbar pull-right">
+				<div class="btn-group">
+		            <a v-if="hasPermission('bar:subject:list')" class="btn btn-default" onclick="reload();"><i class="fa fa-refresh"></i>&nbsp;刷新</a>
+		            <a v-if="hasPermission('bar:subject:stick')" class="btn btn-default" @click="stick_1"><i class="fa fa-hand-pointer-o"></i>&nbsp;置顶</a>
+		            <a v-if="hasPermission('bar:subject:recommend')" class="btn btn-default" @click="recommend_1"><i class="fa fa-star"></i>&nbsp;优先推荐</a>
+			        <a v-if="hasPermission('bar:subject:out')" class="btn btn-default" @click="out"><i class="fa fa-minus"></i>&nbsp;下架</a>
+		        </div>
+	        </div>
+		</div>
+	</div>
+	<div class="row">
+		<table id="dataGrid"></table>
+	</div>
+</div>
+<div th:include="inc/footer::footer"></div>
+<script th:src="@{/assets/js/bar/subject/list.js(${time})}"></script>
+<!-- <script th:src="@{/assets/js/bar/subject/out.js(${time})}"></script> -->
+</body>
+</html>

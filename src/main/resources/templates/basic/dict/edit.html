@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="inc/header::header">
+<title>编辑-通用字典</title>
+</head>
+<body>
+	<div id="dictEditVue" class="container-fluid" v-cloak>
+		<table class="form" id="form">
+			<tr>
+	            <td class="formTitle">类型</td>
+	            <td class="formValue">
+					<label class="radio-inline"> <input type="radio"
+						name="type" value="0" v-model="dict.type" /> 目录
+					</label>
+					<label class="radio-inline"> <input type="radio"
+							name="type" value="1" v-model="dict.type" /> 参数
+					</label>
+				</td>
+        	</tr>
+        	<tr>
+	            <td class="formTitle">名称<font face="宋体">*</font></td>
+	            <td class="formValue">
+					<input type="text" class="form-control" v-model="dict.name" placeholder="目录名称或参数名称" isvalid="yes" checkexpession="NotNull"/>
+				</td>
+        	</tr>
+        	<tr>
+	            <td class="formTitle">英文代码</td>
+	            <td class="formValue">
+					<input type="text" class="form-control" v-model="dict.value" placeholder="类别编码或参数值" isvalid="yes" checkexpession="NotNull"/>
+				</td>
+        	</tr>
+        	<tr>
+	            <td class="formTitle">参数类型<font face="宋体">*</font></td>
+	            <td class="formValue">
+					<input type="text" class="form-control pointer" v-model="dict.pname" @click="dictTree" readonly="readonly" placeholder="一级目录"/>
+				</td>
+        	</tr>
+        	<tr>
+	            <td class="formTitle">排序</td>
+	            <td class="formValue">
+					<input type="text" class="form-control" v-model="dict.orderNum" placeholder="排序" isvalid="yes" checkexpession="NotNull"/>
+				</td>
+        	</tr>
+        	<tr v-if="dict.type == 1">
+	            <td class="formTitle">备注</td>
+	            <td class="formValue">
+					<input type="text" class="form-control" v-model="dict.remark" placeholder="备注"/>
+				</td>
+        	</tr>
+        	<tr v-if="dict.type == 1">
+	            <td class="formTitle">状态</td>
+				<td class="formValue">
+					<label class="radio-inline">
+						<input type="radio" name="status" value="0" v-model="dict.status"/> 隐藏
+					</label>
+					<label class="radio-inline">
+						<input type="radio" name="status" value="1" v-model="dict.status"/> 显示
+					</label>
+				</td>
+        	</tr>
+		</table>
+	</div>
+	<div th:include="inc/footer::footer"></div>
+	<script th:src="@{/assets/js/basic/dict/edit.js(${time})}"></script>
+</body>
+</html>

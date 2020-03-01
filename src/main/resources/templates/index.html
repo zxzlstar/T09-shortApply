@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>星星商城</title>
+<meta
+	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+	name="viewport">
+<link rel="stylesheet" href="assets/css/bootstrap.min.css">
+<link rel="stylesheet" href="assets/css/font-awesome.min.css">
+<link rel="stylesheet" href="assets/css/style.min.css">
+<link rel="stylesheet" href="assets/css/common.min.css">
+</head>
+<body class="hold-transition skin-green sidebar-mini">
+	<div class="wrapper" id="indexVue" v-cloak>
+		<header class="main-header">
+			<a href="index" class="logo"> <span
+				class="logo-mini"><b>星</b></span> <span class="logo-lg"><b><span class="glyphicon glyphicon-star"></span>商城管理后台</b></span>
+			</a>
+			<nav class="navbar navbar-static-top" role="navigation">
+				<a href="#" class="sidebar-toggle" data-toggle="offcanvas"
+					role="button" @click="hideMenu"> <span class="sr-only">Toggle
+						navigation</span>
+				</a>
+				<div style="float: left; color: #fff; padding: 15px 10px;">欢迎
+					{{user.username}}</div>
+				<div class="navbar-custom-menu">
+					<ul class="nav navbar-nav">
+						<li><a href="javascript:;" @click="updatePassword"><i
+								class="fa fa-lock"></i> &nbsp;修改密码</a></li>
+						<li><a href="javascript:;" @click="logout"><i
+								class="fa fa-sign-out"></i> &nbsp;退出系统</a></li>
+					</ul>
+				</div>
+			</nav>
+		</header>
+
+		<!-- 导航菜单 -->
+		<aside class="main-sidebar">
+			<section class="sidebar">
+				<ul class="sidebar-menu">
+					<li class="header">导航菜单</li>
+					<menu-item :item="item" v-for="item in menuList"></menu-item>
+				</ul>
+			</section>
+		</aside>
+		<!-- 路径导航 -->
+		<div class="content-wrapper">
+			<!-- Content Header (Page header) -->
+			<section class="content-header">
+				<ol class="breadcrumb" id="nav_title"
+					style="position: static; float: none;">
+					<li class="active"><i class="fa fa-home"
+						style="font-size: 20px; position: relative; top: 2px; left: -3px;"></i>
+						&nbsp; 首页</li>
+					<li class="active">{{navTitle}}</li>
+				</ol>
+			</section>
+
+			<!-- 主界面 -->
+			<section class="content" style="background: #fff;">
+				<iframe scrolling="yes" frameborder="0"
+					style="width: 100%; min-height: 200px; overflow: visible; background: #fff;"
+					:src="main" id="main" name="main"></iframe>
+			</section>
+		</div>
+
+		<footer class="main-footer">
+			<div class="pull-right hidden-xs">Version 0.1.20191001</div><!-- 单数版本为开发版本，双数就正式版本 -->
+			make in &copy; 2019 <a href="http://www.gupingwan.com"
+				target="_blank">星星</a> All Rights Reserved
+		</footer>
+
+		<div class="control-sidebar-bg"></div>
+
+		<!-- 修改密码 -->
+		<div id="passwordLayer" class="container-fluid" style="display: none;">
+			<table class="form">
+				<tr>
+					<td class="formTitle">账号</td>
+					<td class="formValue"><span class="label label-success"
+						style="vertical-align: bottom;">{{user.username}}</span></td>
+				</tr>
+				<tr>
+					<td class="formTitle">原密码</td>
+					<td class="formValue"><input type="password"
+						class="form-control" v-model="pswd" placeholder="原密码" /></td>
+				</tr>
+				<tr>
+					<td class="formTitle">新密码<font face="宋体">*</font></td>
+					<td class="formValue"><input type="text" class="form-control"
+						v-model="newPswd" placeholder="新密码" /></td>
+				</tr>
+			</table>
+		</div>
+
+	</div>
+
+	<script src="assets/libs/jquery.min.js"></script>
+	<script src="assets/libs/vue.min.js"></script>
+	<script src="assets/libs/router.js"></script>
+	<script src="assets/libs/bootstrap.min.js"></script>
+	<script src="assets/plugins/layer/layer.js"></script>
+	<script th:src="@{assets/js/common.js(${time})}"></script>
+	<script th:src="@{assets/js/index.js(${time})}"></script>
+</body>
+</html>
