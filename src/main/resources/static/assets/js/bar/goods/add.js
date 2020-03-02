@@ -282,7 +282,7 @@ function generateSku(){
 		}
 		tableHTML += '            <th width="20" style="text-align: center">价格（元）</th>';
 		tableHTML += '            <th width="20" style="text-align: center">库存</th>';
-		tableHTML += '			  <th width="20" style="text-align: center">是否启用</th>'
+		tableHTML += '			  <th width="20" style="text-align: center">是否启用</th>';
 		tableHTML += '        </tr>';
 		tableHTML += '    </thead>';
 		tableHTML += '    <tbody>';
