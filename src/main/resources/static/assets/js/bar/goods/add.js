@@ -91,7 +91,7 @@ var vm = new Vue({
 			 url: baseUrl + "/shop/specitem/listall",
 			 dataType : "json",
 			 success : function(data) {
-				 if (data.code == '200') {
+				 if (datacode == '200') {
 					 $.each(data.data, function(i, item){
 						 $("#itemlist").append("<option value='"+item.paramsName+"'>"+item.paramsName+"</option>");
 					 }); 
@@ -272,77 +272,85 @@ function generateSku(){
     var arr_value =getFieldValue();
 	//
 	//组合出所有的情况
+    if(lv1Arr.length>0 && arr_value.length>0){
+		var tableHTML = '';
+		tableHTML += '<table class="table table-bordered">';
+		tableHTML += '    <thead>';
+		tableHTML += '        <tr>';
+		for (var i = 0; i < lv1Arr.length; i++) {
+			tableHTML += '<th width="50" style="text-align: center">' + lv1Arr[i] + '</th>';
+		}
+		tableHTML += '            <th width="20" style="text-align: center">价格（元）</th>';
+		tableHTML += '            <th width="20" style="text-align: center">库存</th>';
+		tableHTML += '			  <th width="20" style="text-align: center">是否启用</th>'
+		tableHTML += '        </tr>';
+		tableHTML += '    </thead>';
+		tableHTML += '    <tbody>';
 
-    var tableHTML = '';
-    tableHTML += '<table class="table table-bordered">';
-    tableHTML += '    <thead>';
-    tableHTML += '        <tr>';
-    for (var i = 0; i < lv1Arr.length; i++) {
-        tableHTML += '<th width="50" style="text-align: center">' + lv1Arr[i] + '</th>';
+		var numsArr = new Array();
+		var idxArr = new Array();
+		for (var i = 0; i < arr_value.length; i++) {
+			numsArr.push(arr_value[i].length);
+			idxArr[i] = 0;
+		}
+
+		var len = 1;
+		var rowsArr = new Array();
+		for (var i = 0; i < numsArr.length; i++) {
+			len = len * numsArr[i];
+
+			var tmpnum = 1;
+			for (var j = numsArr.length - 1; j > i; j--) {
+				tmpnum = tmpnum * numsArr[j];
+			}
+			rowsArr.push(tmpnum);
+		}
+
+
+		for (var i = 0; i < len; i++) {
+			tableHTML += '        <tr data-row="' + (i+1) + '">';
+			var name = '';
+			for (var j = 0; j < lv1Arr.length; j++) {
+				var n = parseInt(i / rowsArr[j]);
+				if (j == 0) {
+				} else if (j == lv1Arr.length - 1) {
+					n = idxArr[j];
+					if (idxArr[j] + 1 >= numsArr[j]) {
+						idxArr[j] = 0;
+					} else {
+						idxArr[j]++;
+					}
+				} else {
+					var m = parseInt(i / rowsArr[j]);
+					n = m % numsArr[j];
+				}
+
+				var text = arr_value[j][n];
+				if (j != lv1Arr.length - 1) {
+					name += text + '_';
+				} else {
+					name += text;
+				}
+				if (i % rowsArr[j] == 0) {
+					tableHTML += '<td width="'+width_one+'" style="text-align: center;display: table-cell;vertical-align: middle" rowspan="' + rowsArr[j] + '" data-rc="' + (i+1) + '_' + (j+1) + '">' + text + '</td>';
+				}
+			}
+
+
+			tableHTML += '<td><input type="text" isvalid="yes" checkexpession="Double" class="form-control" name="price" /></td>';
+			tableHTML += '<td><input type="text" isvalid="yes" checkexpession="Num" class="form-control" name="stock" /><input type="hidden" name="sku_item" class="form-control" value="'+name+'" /></td>';
+			tableHTML += '<td style="text-align: center"><input type="checkbox" name="my-checkbox" checked></td>';
+
+			tableHTML += '</tr>';
+		}
+
+		tableHTML += '</tbody>';
+		tableHTML += '</table>';
+
+		table.html(tableHTML);
+
+		$("[name='my-checkbox']").bootstrapSwitch();
     }
-    tableHTML += '            <th width="20" style="text-align: center">价格（元）</th>';
-    tableHTML += '            <th width="20" style="text-align: center">库存</th>';
-    tableHTML += '        </tr>';
-    tableHTML += '    </thead>';
-    tableHTML += '    <tbody>';
-
-    var numsArr = new Array();
-    var idxArr = new Array();
-    for (var i = 0; i < arr_value.length; i++) {
-        numsArr.push(arr_value[i].length);
-        idxArr[i] = 0;
-    }
-
-    var len = 1;
-    var rowsArr = new Array();
-    for (var i = 0; i < numsArr.length; i++) {
-        len = len * numsArr[i];
-
-        var tmpnum = 1;
-        for (var j = numsArr.length - 1; j > i; j--) {
-            tmpnum = tmpnum * numsArr[j];
-        }
-        rowsArr.push(tmpnum);
-    }
-
-    for (var i = 0; i < len; i++) {
-        tableHTML += '        <tr data-row="' + (i+1) + '">';
-        var name = '';
-        for (var j = 0; j < lv1Arr.length; j++) {
-            var n = parseInt(i / rowsArr[j]);
-            if (j == 0) {
-            } else if (j == lv1Arr.length - 1) {
-                n = idxArr[j];
-                if (idxArr[j] + 1 >= numsArr[j]) {
-                    idxArr[j] = 0;
-                } else {
-                    idxArr[j]++;
-                }
-            } else {
-                var m = parseInt(i / rowsArr[j]);
-                n = m % numsArr[j];
-            }
-
-            var text = arr_value[j][n];
-            if (j != lv1Arr.length - 1) {
-                name += text + '_';
-            } else {
-                name += text;
-            }
-            if (i % rowsArr[j] == 0) {
-                tableHTML += '<td width="'+width_one+'" style="text-align: center;display: table-cell;vertical-align: middle" rowspan="' + rowsArr[j] + '" data-rc="' + (i+1) + '_' + (j+1) + '">' + text + '</td>';
-            }
-        }
-
-        tableHTML += '<td><input type="text" isvalid="yes" checkexpession="Double" class="form-control" name="price" /></td>';
-        tableHTML += '<td><input type="text" isvalid="yes" checkexpession="Num" class="form-control" name="stock" /><input type="hidden" name="sku_item" class="form-control" value="'+name+'" /></td>';
-        tableHTML += '</tr>';
-    }
-    tableHTML += '</tbody>';
-    tableHTML += '</table>';
-
-    table.html(tableHTML);
-
 
 }
 
@@ -350,7 +358,9 @@ function generateSku(){
 function getFieldName(){
 	var arr = [];
 	$("#skuForm").find(".sku_name").each(function(){
-		arr.push($(this).find("input").val());
+		if($.trim($(this).find("input").val()) != "") {
+            arr.push($(this).find("input").val());
+        }
 	});
 	return arr;
 }
@@ -362,10 +372,13 @@ function getFieldValue(){
     $("#skuForm").find(".sku_value").each(function(index,e){
     	var arr_item = [];
 		$(e).find("input").each(function (lg,f) {
-			if($.trim($(f).val()) != '')
-            arr_item.push($.trim($(f).val()));
+			if($.trim($(f).val()) != "") {
+                arr_item.push($.trim($(f).val()));
+            }
         });
-		arr.push(arr_item);
+		if(arr_item.length>0) {
+            arr.push(arr_item);
+        }
     });
     return arr;
 }
