@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="inc/header::header">
+<title>编辑-用户管理</title>
+</head>
+<body>
+	<div id="userEditVue" class="container-fluid" v-cloak>
+		<table class="form" id="form">
+			<tr>
+	            <td class="formTitle">用户名<font face="宋体">*</font></td>
+	            <td class="formValue" v-if="user.username=='admin'">
+					<input type="text" class="form-control" placeholder="用户名" v-model="user.username" readonly="readonly" isvalid="yes" checkexpession="NotNull">
+	            </td>
+	            <td class="formValue" v-else>
+					<input type="text" class="form-control" placeholder="用户名" v-model="user.username" isvalid="yes" checkexpession="NotNull">
+	            </td>
+	            <td class="formTitle">密码</td>
+	            <td class="formValue">
+					<input type="text" class="form-control" placeholder="密码" value="******" readonly="readonly">
+	            </td>
+        	</tr>
+        	<tr>
+        		<td class="formTitle">邮箱</td>
+	            <td class="formValue">
+					<input type="text" class="form-control" placeholder="邮箱" v-model="user.email" isvalid="yes"  checkexpession = "EmailOrNull">
+	            </td>
+	            <td class="formTitle">手机号</td>
+	            <td class="formValue">
+					<input type="text" class="form-control" placeholder="手机号" v-model="user.mobile" isvalid="yes"  checkexpession = "MobileOrNull">
+	            </td>
+        	</tr>
+        	<tr>
+        		<td class="formTitle">角色</td>
+	            <td class="formValue" colspan="3">
+					<label v-for="role in roleList" class="checkbox-inline">
+					  <input type="checkbox" :value="role.id" v-model="user.roleIdList">{{role.roleName}}
+					</label>
+	            </td>
+        	</tr>
+			<tr>
+				<td class="formTitle">状态</td>
+				<td class="formValue" colspan="3">
+					<label class="radio-inline">
+						<input type="radio" name="status" value="0" v-model="user.status"/> 禁用
+					</label>
+					<label class="radio-inline">
+						<input type="radio" name="status" value="1" v-model="user.status"/> 正常
+					</label>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div th:include="inc/footer::footer"></div>
+	<script
+		th:src="@{/assets/js/basic/user/edit.js(${time})}"></script>
+</body>
+</html>

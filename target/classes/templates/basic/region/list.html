@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="inc/header::header">
+<title>行政区域</title>
+</head>
+<body>
+<div id="regionListVue" class="container-fluid" v-cloak>
+	<div class="row">
+		<div class="col-md-2 no-padding">
+			<div class="panel panel-default">
+				<div class="panel-heading">区域目录</div>
+				<div class="panel-body" id="treePanel" style="overflow: auto;">
+					<ul id="regionTree" class="ztree"></ul>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-10 no-padding">
+			<div class="panel panel-default">
+				<div class="panel-heading">区域信息</div>
+				<div class="panel-body">
+					<div class="row">
+						<div class="col-md-6 form-inline pull-left">
+							<div class="form-group">
+						    	<input v-model="keyword" @keyup.enter="load" class="form-control" placeholder="请输入查询关键字" style="width: 220px;" />
+							</div>
+							<div class="form-group">
+							    <a class="btn btn-primary" @click="load"><i class="fa fa-search"></i>&nbsp;查询</a>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="btn-toolbar pull-right">
+								<div class="btn-group">
+						            <a v-if="hasPermission('basic:region:list')" class="btn btn-default" onclick="reload();"><i class="fa fa-refresh"></i>&nbsp;刷新</a>
+						            <a v-if="hasPermission('basic:region:add')" class="btn btn-default" @click="add"><i class="fa fa-plus"></i>&nbsp;新增</a>
+						            <a v-if="hasPermission('basic:region:edit')" class="btn btn-default" @click="edit"><i class="fa fa-pencil-square-o"></i>&nbsp;编辑</a>
+						            <a v-if="hasPermission('basic:region:remove')" class="btn btn-default" @click="remove"><i class="fa fa-trash-o"></i>&nbsp;删除</a>
+						        </div>
+					        </div>
+						</div>
+					</div>
+					<div class="row">
+						<table id="dataGrid"></table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+</div>
+<div th:include="inc/footer::footer"></div>
+<script th:src="@{/assets/js/basic/region/list.js(${time})}"></script>
+</body>
+</html>

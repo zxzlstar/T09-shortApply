@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="inc/header::header">
+<title>修改金额-会员管理管理</title>
+</head>
+<body>
+	<div id="memberAmountVue" class="container-fluid" v-cloak>
+		<table class="form" id="form">
+			<tr>
+	            <td class="formTitle">消费累计金额<font face="宋体">*</font></td>
+	            <td class="formValue">
+					<input type="text" class="form-control" placeholder="累计金额" v-model="member.amount" isvalid="yes" checkexpession="Double">
+	            </td>
+        	</tr>
+		</table>
+	</div>
+	<div th:include="inc/footer::footer"></div>
+	<script
+		th:src="@{/assets/js/bar/member/updateAmount.js(${time})}"></script>
+</body>
+</html>

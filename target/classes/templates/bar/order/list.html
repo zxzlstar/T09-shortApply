@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="inc/header::header">
+<title>订单管理</title>
+</head>
+<body>
+<div id="orderListVue" class="container-fluid" v-cloak>
+	<div class="row">
+		<div class="col-md-11 form-inline pull-left">
+			<div class="form-group">
+		    	订单号：<input v-model="oid" @keyup.enter="load" class="form-control" placeholder="请输入订单的单号" style="width: 120px;" />
+		    	&nbsp;&nbsp;下单日期范围：<input v-model="dateStr" id="date" @keyup.enter="load" class="form-control" placeholder="下单日期范围" style="width: 200px;" />
+		    	&nbsp;&nbsp;订单类型：
+						<select v-model="orderType" class="form-control" @keyup.enter="load" placeholder="订单类型" style="width: 50px">
+							<option value="">全部</option>
+							<option value="1">普通</option>
+							<option value="2">竞猜</option>
+						</select>
+		    	订单状态：	
+						<select v-model="status" class="form-control" @keyup.enter="load" placeholder="订单状态" style="width: 150px">
+							<option value="">全部</option>
+							<option value="1">待付款</option>
+						</select>
+				<a class="btn btn-primary" @click="load"><i class="fa fa-search"></i>&nbsp;查询</a>
+			</div>
+		</div>
+		<div class="col-md-1">
+			<div class="btn-toolbar pull-right">
+				<div class="btn-group">
+		            <a v-if="hasPermission('bar:order:list')" class="btn btn-default" onclick="reload();"><i class="fa fa-refresh"></i>&nbsp;刷新</a>
+		        </div>
+	        </div>
+		</div>
+	</div>
+	<div class="row">
+		<table id="dataGrid"></table>
+	</div>
+</div>
+
+<div th:include="inc/footer::footer"></div>
+<script th:src="@{/assets/plugins/laydate/laydate.js(${time})}"></script>
+<script th:src="@{/assets/js/bar/order/list.js(${time})}"></script>
+<script th:src="@{/assets/plugins/select2/js/select2.min.js(${time})}"></script>
+<script th:src="@{/assets/plugins/select2/js/select2.full.min.js(${time})}"></script>
+<script th:src="@{/assets/js/bar/order/select2.js(${time})}"></script>
+</body>
+</html>

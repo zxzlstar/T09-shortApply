@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="inc/header::header">
+<title>商品管理</title>
+</head>
+<body>
+<div id="goodsListVue" class="container-fluid" v-cloak>
+	<div class="row">
+		<div class="col-md-7 form-inline pull-left">
+			<div class="form-group">
+		    	&nbsp;&nbsp;商品名称：<input v-model="keyword" @keyup.enter="load" class="form-control" placeholder="请输入查询关键字" style="width: 220px;" />
+		    	&nbsp;&nbsp;商品状态：	
+						<select v-model="status" class="form-control" @keyup.enter="load" placeholder="商品状态" style="width: 80px">
+							<option value="">全部</option>
+							<option value="1">未上架</option>
+							<option value="2">已上架</option>
+						</select>
+			</div>
+			<div class="form-group">
+			    <a class="btn btn-primary" @click="load"><i class="fa fa-search"></i>&nbsp;查询</a>
+			</div>
+		</div>
+		<div class="col-md-5">
+			<div class="btn-toolbar pull-right">
+				<div class="btn-group">
+		            <a v-if="hasPermission('bar:goods:list')" class="btn btn-default" onclick="reload();"><i class="fa fa-refresh"></i>&nbsp;刷新</a>
+					<a v-if="hasPermission('bar:goods:add')" class="btn btn-default" @click="add"><i class="fa fa-plus"></i>&nbsp;新增</a>
+					<a v-if="hasPermission('bar:goods:edit')" class="btn btn-default" @click="edit"><i class="fa fa-pencil-square-o"></i>&nbsp;编辑</a>
+					<a v-if="hasPermission('bar:goods:sellIn')" class="btn btn-default" @click="sellIn"><i class="glyphicon glyphicon-circle-arrow-up"></i>&nbsp;上架</a>
+					<a v-if="hasPermission('bar:goods:sellOut')" class="btn btn-default" @click="sellOut"><i class="glyphicon glyphicon-circle-arrow-down"></i>&nbsp;下架</a>
+		        </div>
+		        <div class="btn-group">
+ 		        	<a v-if="hasPermission('bar:goods:stick')" class="btn btn-default" @click="stick"><i class="fa fa-arrow-up"></i>&nbsp;置顶</a>
+		            <a v-if="hasPermission('bar:goods:ccelStick')" class="btn btn-default" @click="ccelStick"><i class="fa fa-arrow-down"></i>&nbsp;取消置顶</a>
+		            <a v-if="hasPermission('bar:goods:recommend')" class="btn btn-default" @click="recommend"><i class="fa fa-star"></i>&nbsp;推荐</a>
+		            <a v-if="hasPermission('bar:goods:ccelRecommend')" class="btn btn-default" @click="ccelRecommend"><i class="fa fa-star-o"></i>&nbsp;取消推荐</a>
+					<a v-if="hasPermission('bar:goods:remove')" class="btn btn-default" @click="remove"><i class="fa fa-trash-o"></i>&nbsp;删除</a>
+		        </div>
+	        </div>
+
+			<a  class="btn btn-default" onclick="reload();"><i class="fa fa-refresh"></i>&nbsp;刷新</a>
+			<a  class="btn btn-default" @click="add"><i class="fa fa-plus"></i>&nbsp;新增</a>
+			<a  class="btn btn-default" @click="edit"><i class="fa fa-pencil-square-o"></i>&nbsp;编辑</a>
+			<a v-if="hasPermission('bar:goods:sellIn')" class="btn btn-default" @click="sellIn"><i class="glyphicon glyphicon-circle-arrow-up"></i>&nbsp;上架</a>
+			<a v-if="hasPermission('bar:goods:sellOut')" class="btn btn-default" @click="sellOut"><i class="glyphicon glyphicon-circle-arrow-down"></i>&nbsp;下架</a>
+		</div>
+	</div>
+	<div class="row">
+		<table id="dataGrid"></table>
+	</div>
+</div>
+<div th:include="inc/footer::footer"></div>
+<script th:src="@{/assets/js/bar/goods/list.js(${time})}"></script>
+<script th:src="@{/assets/js/bar/goods/selloutIn.js(${time})}"></script>
+<script th:src="@{/assets/js/bar/goods/stickRecommond.js(${time})}"></script>
+</body>
+</html>

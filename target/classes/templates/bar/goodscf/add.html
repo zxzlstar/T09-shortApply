@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="inc/header::header">
+<title>新增-商品类型</title>
+</head>
+<body>
+	<div id="goodscfAddVue" class="container-fluid" v-cloak>
+		<table class="form" id="form">
+        	<tr>
+	            <td class="formTitle">名称<font face="宋体">*</font></td>
+	            <td class="formValue">
+					<input type="text" class="form-control" v-model="goodscf.name" placeholder="商品类别名称" isvalid="yes" checkexpession="NotNull"/>
+				</td>
+        	</tr>
+        	<tr>
+	            <td class="formTitle">上级商品类型</td>
+	            <td class="formValue">
+					<input type="text" class="form-control pointer" v-model="goodscf.pname" @click="goodscfTree" readonly="readonly"/>
+					<span class="input-button-icon" title="选取图标" @click="removeParent">
+						<i class="fa fa-remove"></i>
+					</span>
+				</td>
+        	</tr>
+        	<tr>
+				<td class="formTitle">图片</td>
+				<td class="formValue">
+					<img id = "imageView" alt = " " src= "" style = "float:left;width:120px;height:120px;display:none">
+					<input id = "imageFile" type="file" name = "file" value="上传图片" onchange="uploadImage();">
+				</td>
+			</tr>
+        	<tr>
+        		<td class="formTitle">排序</td>
+	            <td class="formValue">
+					<input type="text" class="form-control" placeholder="默认是0，数字越大，商品类别排的位置越前" v-model="goodscf.rank" isvalid="yes" checkexpession="Num">
+	            </td>
+        	</tr>
+			<tr>
+	            <td class="formTitle">备注</td>
+	            <td class="formValue">
+					<textarea class="form-control" rows="4" placeholder="备注" v-model="goodscf.remark"></textarea>
+				</td>
+        	</tr>
+		</table>
+	</div>
+	<div th:include="inc/footer::footer"></div>
+	<script
+		th:src="@{/assets/js/bar/goodscf/add.js(${time})}"></script>
+	<script th:src="@{/assets/plugins/upload/jquery.upload.js(${time})}"></script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="inc/header::header">
+<title>新增-banner管理</title>
+</head>
+<body>
+	<div id="bannerAddVue" class="container-fluid" v-cloak>
+		<table class="form" id="form">
+			<tr>
+	            <td class="formTitle">名称<font face="宋体">*</font></td>
+	            <td class="formValue">
+					<input type="text" class="form-control" placeholder="名称" v-model="banner.name" isvalid="yes" checkexpession="NotNull">
+	            </td>
+        	</tr>
+        	<tr>
+        		<td class="formTitle">链接地址</td>
+	            <td class="formValue">
+					<input type="text" class="form-control" placeholder="链接地址" v-model="banner.link" isvalid="yes" checkexpession="UriOrNull">
+	            </td>
+        	</tr>
+        	<tr>
+        		<td class="formTitle">排序</td>
+	            <td class="formValue">
+					<input type="text" class="form-control" placeholder="默认是0，数字越大，广告图片排的位置越前" v-model="banner.rank" isvalid="yes" checkexpession="Num">
+	            </td>
+        	</tr>
+			<tr>
+				<td class="formTitle">位置</td>
+				<td class="formValue">
+					<label class="radio-inline">
+						<input type="radio" name="position" value="1" v-model="banner.position" id="position1"/> <label for="position1">首页</label>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<input type="radio" name="position" value="2" v-model="banner.position" id="position2"/> <label for="position2">竞猜页面</label>
+					</label>
+				</td>
+			</tr>
+			<tr>
+				<td class="formTitle">图片</td>
+				<td class="formValue">
+					<img id = "imageView" alt = " " src= "" style = "width:120px;height:120px;display:none">
+					<input id = "imageFile" type="file" name = "file" value="上传图片" onchange="uploadImage();" isvalid="yes" checkexpession="NotNull">
+				</td>
+			</tr>
+        	<tr>
+	            <td class="formTitle formTitle-top">备注</td>
+	            <td class="formValue">
+					<textarea class="form-control" rows="4" placeholder="备注" v-model="banner.remark"></textarea>
+	            </td>
+        	</tr>
+		</table>
+	</div>
+	<div th:include="inc/footer::footer"></div>
+	<script
+		th:src="@{/assets/js/bar/banner/add.js(${time})}"></script>
+	<script th:src="@{/assets/plugins/upload/jquery.upload.js(${time})}"></script>
+</body>
+</html>

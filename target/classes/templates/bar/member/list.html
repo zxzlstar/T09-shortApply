@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="inc/header::header">
+<title>会员管理</title>
+</head>
+<body>
+<div id="memberListVue" class="container-fluid" v-cloak>
+	<div class="row">
+		<div class="col-md-11 form-inline pull-left">
+			<div class="form-group">
+		    	昵称：<input v-model="nickname" @keyup.enter="load" class="form-control" placeholder="请输入名称" style="width: 150px;" />
+		    	&nbsp;&nbsp;性别：	
+						<select v-model="sex" class="form-control" @keyup.enter="load" placeholder="性别" style="width: 80px">
+							<option value="0">不确定</option>
+							<option value="1">男</option>
+							<option value="2">女</option>
+						</select>		    	
+		    	&nbsp;&nbsp;注册日期范围：<input v-model="ctime" id="date" @keyup.enter="load" class="form-control" placeholder="注册日期范围" style="width: 220px;" />
+				<br>邀请码：<input v-model="invitation" @keyup.enter="load" class="form-control" placeholder="请输入邀请码" style="width: 150px;" />
+				&nbsp;&nbsp;消费金额：
+						<select v-model="amount" class="form-control" @keyup.enter="load" placeholder="" style="width: 120px">
+							<option value="0"></option>
+							<option value="1">由低到高</option>
+							<option value="2">由高到低</option>
+						</select>	
+			</div>
+			
+			<div class="form-group">
+			    <a class="btn btn-primary" @click="load"><i class="fa fa-search"></i>&nbsp;查询</a>
+			</div>
+		</div>
+		<div class="col-md-1">
+			<div class="btn-toolbar pull-right">
+				<div class="btn-group">
+		            <a v-if="hasPermission('bar:member:list')" class="btn btn-default" onclick="reload();"><i class="fa fa-refresh"></i>&nbsp;刷新</a>
+		        </div>
+	        </div>
+		</div>
+	</div>
+	<div class="row">
+		<table id="dataGrid"></table>
+	</div>
+</div>
+<div th:include="inc/footer::footer"></div>
+<script th:src="@{/assets/plugins/laydate/laydate.js(${time})}"></script>
+<script th:src="@{/assets/js/bar/member/list.js(${time})}"></script>
+</body>
+</html>

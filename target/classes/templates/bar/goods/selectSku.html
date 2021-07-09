@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="inc/header::header">
+<title>选取规格项-规格项管理</title>
+</head>
+<body>
+	<div id="skuVue" class="container-fluid" v-cloak>
+		<ul id="skuTree" class="ztree"></ul>
+	</div>
+	<div th:include="inc/footer::footer"></div>
+	<script type="text/javascript">
+	var setting = {
+		data : {
+			simpleData : {
+				enable : true,
+				idKey : "id",
+				pIdKey : "pid",
+				rootPId : -1
+			},
+			key : {
+				url : "nourl"
+			}
+		},
+		check:{
+			enable:true,
+			nocheckInherit:true
+		}
+	};
+	var ztree;
+
+	var vm = new Vue({
+		el : '#skuVue',
+		data : {
+			specitem : {}
+		},
+		methods : {
+            getSku : function() {
+				$.get(baseUrl + '/shop/specitem/listSpeciTree?_' + $.now(), function(r) {
+					ztree = $.fn.zTree
+							.init($("#skuTree"), setting, r.data);
+					ztree.expandAll(true);
+					vm.setForm();
+				}) ;
+			},
+			acceptClick: function() {
+                var arr = [];
+				var nodes = ztree.getCheckedNodes(true);
+				for(var i=0; i<nodes.length; i++) {
+					//menuIdList.push(nodes[i].id);
+					if(nodes[i].id != undefined){
+                        top.layerForm.addSku();
+                        $(top.layerForm.document).find("#skuForm").find("tr").eq(-2).find("input").val(nodes[i].name);
+					    var childNode =nodes[i].children;
+					    var index = 1;
+					    var obj_add;
+					    $.each(childNode,function(i,n){
+					        if(n.checked){
+					            if(index == 1) {
+                                    obj_add = $(top.layerForm.document).find("#skuForm").find("tr").eq(-1).find("input").parent().next().find("a").eq(1);
+                                    $(top.layerForm.document).find("#skuForm").find("tr").eq(-1).find("input").val(n.name);
+                                }else{
+                                    top.layerForm.addTd(obj_add);
+                                    obj_add.parent().next().find("input").val(n.name);
+								}
+								index++;
+						    }
+						});
+					}
+				}
+                dialogClose();
+
+			}
+		},
+		created : function() {
+			//this.getMenu();
+		}
+	})
+	</script>
+</body>
+</html>

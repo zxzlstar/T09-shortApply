@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>精选酒吧平台</title>
+<meta name="viewport"
+	content="width=device-width,initial-scale=1,user-scalable=0,user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}" media="all">
+<style type="text/css">
+body {
+	background-color: #FFFFFF;
+}
+.content {
+	width: 100%;
+	height: 100%;
+	margin-top: 100px;
+}
+.imageIcon {
+	width: 100px;
+	height: 100px;
+	border: 1px solid #FFF;
+	border-radius: 50px;
+	margin:0 auto;
+}
+.imageUrl {
+	width: 100%;
+	height: 100%;
+	border: 1px solid #FFF;
+	border-radius: 50px;
+}
+.nickName {
+	padding: 20px 0px;
+}
+.nickNameValue {
+	font-size: 18px;
+	text-align: center;
+}
+.nickTips {
+	text-align: center;
+	color: #777777;
+	font-size: 15px;
+	margin-top: 10px;
+	padding: 0 10px;
+}
+footer{
+	margin-top: 20px;
+	text-align: center;
+}
+.btnYes {
+	width: 95%;
+	background-color: #02BF01;
+}
+.btnNo {
+	width: 95%;
+	margin-top: 20px;
+	margin-left:0px!important;
+}
+</style>
+</head>
+<body>
+	<div class="content">
+		<input id = "id" type="hidden" th:value="${sc.id}">
+		<div class="imageIcon">
+			<img class="imageUrl" th:src="@{${sc.wxHeadimgurl}}" alt="" />
+		</div>
+		<div class="nickName">
+			<p class="nickNameValue" th:text="${sc.wxNickname}"></p>
+			<p class="nickTips" th:if="${sc.type==1}">你好，请确认是否接受微信绑定精选酒吧商家平台，绑定后默认提现到该微信钱包和可用微信扫码登录。</p>
+			<p class="nickTips" th:if="${sc.type==2}">你好，请确认登录精选酒吧商家平台？</p>
+			<p class="nickTips" th:if="${sc.type==3}">你好，请确认是否接受微信绑定精选酒吧店员，绑定后默认可在会员中查看打赏记录及提现打赏到当时微信钱包。</p>
+			<p class="nickTips" th:if="${sc.type==4}">你好，请确认是否解除微信与精选酒吧店员的绑定，解绑后在会员中将看不到打赏记录及提现了。</p>
+		</div>
+	</div>
+	<footer>
+		<button id = "agree" type="button"  class="btn btn-success btnYes">同意操作</button>
+		<button id = "cancel" type="button" class="btn btn-default btnNo">拒绝</button>
+	</footer>
+</body>
+<script type="text/javascript" th:src="@{/assets/libs/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/assets/libs/bootstrap.min.js}"></script>
+<script type="text/javascript" th:src="@{/assets/libs/jweixin-1.2.0.js}"></script>
+<script>
+$(function(){
+	$("#agree").click(function(){
+		window.location.href = "/scancode/confirm?id=" + $("#id").val(); 
+	});
+	$("#cancel").click(function(){
+		wx.closeWindow();
+	});
+}) ;
+</script>
+</html>

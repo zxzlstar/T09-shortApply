@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="inc/header::header">
+<title>字典选择</title>
+</head>
+<body>
+	<div id="dictTreeVue" class="container-fluid" v-cloak>
+		<ul id="dictTree" class="ztree"></ul>
+	</div>
+	<div th:include="inc/footer::footer"></div>
+	<script type="text/javascript">
+	var setting = {
+		data : {
+			simpleData : {
+				enable : true,
+				idKey : "id",
+				pIdKey : "pid",
+				rootPId : -1
+			},
+			key : {
+				url : "nourl"
+			}
+		}
+	};
+	var ztree;
+
+	var vm = new Vue({
+		el : '#dictTreeVue',
+		methods : {
+			getDict : function(menuId) {
+				$.get(baseUrl + '/basic/dict/select', function(r) {
+					ztree = $.fn.zTree
+							.init($("#dictTree"), setting, r.data);
+					if(top.layerForm.vm.dict.pid != ''){
+						var node = ztree.getNodeByParam("id", top.layerForm.vm.dict.pid);
+						ztree.selectNode(node);
+						top.layerForm.vm.dict.pname = node.name;
+					}
+				})
+			},
+			acceptClick: function() {
+				var node = ztree.getSelectedNodes();
+				top.layerForm.vm.dict.pid = node[0].id;
+				top.layerForm.vm.dict.pname = node[0].name;
+				dialogClose();
+			}
+		},
+		created : function() {
+			this.getDict();
+		}
+	})
+	</script>
+</body>
+</html>

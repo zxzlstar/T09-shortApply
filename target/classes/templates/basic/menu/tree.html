@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="inc/header::header">
+<title>新增-菜单管理</title>
+</head>
+<body>
+	<div id="menuTreeVue" class="container-fluid" v-cloak>
+		<ul id="menuTree" class="ztree"></ul>
+	</div>
+	<div th:include="inc/footer::footer"></div>
+	<script type="text/javascript">
+	var setting = {
+		data : {
+			simpleData : {
+				enable : true,
+				idKey : "id",
+				pIdKey : "pid",
+				rootPId : -1
+			},
+			key : {
+				url : "nourl"
+			}
+		}
+	};
+	var ztree;
+
+	var vm = new Vue({
+		el : '#menuTreeVue',
+		methods : {
+			getMenu : function(id) {
+				$.get(baseUrl + '/basic/menu/list', function(r) {
+					ztree = $.fn.zTree
+							.init($("#menuTree"), setting, r.data);
+					if(top.layerForm.vm.menu.pid != ''){
+						var node = ztree.getNodeByParam("id", top.layerForm.vm.menu.pid);
+						ztree.selectNode(node);
+						top.layerForm.vm.menu.pname = node.name;
+					}
+				})
+			},
+			acceptClick: function() {
+				var node = ztree.getSelectedNodes();
+				var parent = node[0].getParentNode();
+				top.layerForm.vm.menu.pid = node[0].id;
+				top.layerForm.vm.menu.pname = node[0].name;//设置
+				dialogClose();
+			}
+		},
+		created : function() {
+			this.getMenu();
+		}
+	})
+	</script>
+</body>
+</html>

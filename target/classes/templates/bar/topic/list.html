@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="inc/header::header">
+<title>话题管理</title>
+</head>
+<body>
+<div id="topicListVue" class="container-fluid" v-cloak>
+	<div class="row">
+		<div class="col-md-12 form-inline pull-left">
+			<div class="form-group">
+		    	&nbsp;&nbsp;主题：<input v-model="searchTitle" @keyup.enter="load" class="form-control" placeholder="请输入查询关键字" style="width: 220px;" />
+		    	&nbsp;&nbsp;状态：	
+					<select v-model="searchStatus" class="form-control" @keyup.enter="load" placeholder="" style="width: 80px">
+						<option value="">全部</option>
+						<option value="1">展示中,可评论</option>
+						<option value="2">展示中,不可评论</option>
+						<option value="3">已下线</option>
+					</select>
+				&nbsp;&nbsp;置顶：
+					<select v-model="stick" class="form-control" @keyup.enter="load" placeholder="" style="width: 120px">
+						<option value="">全部</option>
+						<option value="1">是</option>
+						<option value="0">否</option>
+					</select>
+				&nbsp;&nbsp;优先推荐：
+					<select v-model="recommend" class="form-control" @keyup.enter="load" placeholder="" style="width: 120px">
+						<option value="">全部</option>
+						<option value="1">是</option>
+						<option value="0">否</option>
+					</select>	
+			</div>
+			<div class="form-group">
+			    <a class="btn btn-primary" @click="load"><i class="fa fa-search"></i>&nbsp;查询</a>
+			</div>
+		</div>
+		<div class="">
+			<div class="btn-toolbar pull-right">
+				<div class="btn-group">
+		            <a v-if="hasPermission('bar:topic:list')" class="btn btn-default" onclick="reload();"><i class="fa fa-refresh"></i>&nbsp;刷新</a>
+		            <a v-if="hasPermission('bar:topic:add')" class="btn btn-default" @click="add"><i class="fa fa-plus"></i>&nbsp;新增</a>
+		            <a v-if="hasPermission('bar:topic:edit')" class="btn btn-default" @click="edit"><i class="fa fa-pencil-square-o"></i>&nbsp;编辑</a>
+		            <a v-if="hasPermission('bar:topic:stick')" class="btn btn-default" @click="stick_"><i class="fa fa-hand-pointer-o"></i>&nbsp;置顶</a>
+		            <a v-if="hasPermission('bar:topic:recommend')" class="btn btn-default" @click="recommend_"><i class="fa fa-star"></i>&nbsp;优先推荐</a>
+			        <a v-if="hasPermission('bar:topic:out')" class="btn btn-default" @click="out"><i class="fa fa-minus"></i>&nbsp;下架</a>
+		        </div>
+	        </div>
+		</div>
+	</div>
+	<div class="row">
+		<table id="dataGrid"></table>
+	</div>
+</div>
+<div th:include="inc/footer::footer"></div>
+<script th:src="@{/assets/js/bar/topic/list.js(${time})}"></script>
+<script th:src="@{/assets/js/bar/topic/out.js(${time})}"></script>
+</body>
+</html>
