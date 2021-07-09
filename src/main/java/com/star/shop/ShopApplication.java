@@ -19,7 +19,7 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import java.nio.charset.Charset;
 import java.util.Arrays;
 
-@EnableCaching // 开启缓存
+//@EnableCaching // 开启缓存
 @EnableJpaAuditing(auditorAwareRef = "auditorAwareBean") // 开启jpa审计
 @SpringBootApplication
 public class ShopApplication  extends SpringBootServletInitializer {

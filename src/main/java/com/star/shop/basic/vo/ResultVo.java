@@ -68,7 +68,7 @@ public class ResultVo {
 	}
 
 	public static ResultVo e(Integer code) {
-		return new ResultVo();
+		return new ResultVo(code);
 	}
 
 	public static ResultVo e(Integer code, String message) {

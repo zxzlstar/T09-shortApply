@@ -13,6 +13,10 @@
 		            <a v-if="hasPermission('basic:menu:add')" class="btn btn-default" @click="add"><i class="fa fa-plus"></i>&nbsp;新增</a>
 		            <a v-if="hasPermission('basic:menu:edit')" class="btn btn-default" @click="edit"><i class="fa fa-pencil-square-o"></i>&nbsp;编辑</a>
 		            <a v-if="hasPermission('basic:menu:remove')" class="btn btn-default" @click="remove"><i class="fa fa-trash-o"></i>&nbsp;删除</a>
+					<a class="btn btn-default" onclick="reload();"><i class="fa fa-refresh"></i>&nbsp;刷新</a>
+					<a class="btn btn-default" @click="add"><i class="fa fa-plus"></i>&nbsp;新增</a>
+					<a class="btn btn-default" @click="edit"><i class="fa fa-pencil-square-o"></i>&nbsp;编辑</a>
+					<a class="btn btn-default" @click="remove"><i class="fa fa-trash-o"></i>&nbsp;删除</a>
 		        </div>
 	        </div>
 		</div>

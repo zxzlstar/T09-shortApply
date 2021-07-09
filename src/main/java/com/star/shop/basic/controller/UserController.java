@@ -44,11 +44,11 @@ public class UserController extends BaseController {
 		return ResultVo.s(ShiroUtils.getUser()) ;
 	}
 	
-	@RequestMapping(value = "/perms")
-	public ResultVo perms(){
-		return ResultVo.s(this.userService.listUserPerms(ShiroUtils.getUserId())) ;
-	}
-	
+//	@RequestMapping(value = "/perms")
+//	public ResultVo perms(){
+//		return ResultVo.s(this.userService.listUserPerms(ShiroUtils.getUserId())) ;
+//	}
+//
 	/**
 	 * 
 	 * @param id

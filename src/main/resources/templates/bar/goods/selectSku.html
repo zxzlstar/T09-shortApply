@@ -35,7 +35,7 @@
 		},
 		methods : {
             getSku : function() {
-				$.get(baseUrl + '/bar/specitem/listSpeciTree?_' + $.now(), function(r) {
+				$.get(baseUrl + '/shop/specitem/listSpeciTree?_' + $.now(), function(r) {
 					ztree = $.fn.zTree
 							.init($("#skuTree"), setting, r.data);
 					ztree.expandAll(true);

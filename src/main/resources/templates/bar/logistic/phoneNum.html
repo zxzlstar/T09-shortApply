@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="inc/header::header">
+<title>手机尾号后四位</title>
+</head>
+<body>
+	<div id="logisticNumberVue" class="container-fluid" v-cloak>
+		<table class="form" id="form">
+			<tr>
+	            <td class="formTitle">尾号后四位<font face="宋体">*</font></td>
+	            <td class="formValue">
+					<input type="text" class="form-control" placeholder="手机尾号后四位" v-model="phoneEnd" isvalid="yes" checkexpession="NotNull" STYLE="width: 180px">
+	            </td>
+        	</tr>
+		</table>
+	</div>
+	<div th:include="inc/footer::footer"></div>
+	<script th:src="@{/assets/js/bar/logistic/phoneNum.js(${time})}"></script>
+</body>
+</html>
